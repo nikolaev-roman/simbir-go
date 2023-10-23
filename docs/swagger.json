@@ -1,0 +1,10 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "service for transport rent",
+        "title": "Simbir.GO",
+        "contact": {},
+        "version": "1"
+    },
+    "paths": {}
+}

@@ -46,3 +46,8 @@ func (r *transportRepo) Update(ctx context.Context, transport *models.Transport)
 
 	return transport, nil
 }
+
+func (r *transportRepo) Delete(ctx context.Context, ID uuid.UUID) error {
+	result := r.db.Delete(&models.Transport{}, ID)
+	return result.Error
+}

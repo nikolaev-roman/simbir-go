@@ -9,6 +9,10 @@ import (
 )
 
 func MapTransportRoutes(transportGroup *gin.RouterGroup, h transport.Handlers, us account.UseCase, cfg *config.Config, mv *middleware.MiddlewareManager) {
+	transportGroup.GET("/:transport_id", h.Get())
+
 	transportGroup.Use(mv.CheckAuth(us, cfg))
-	transportGroup.POST("/", h.Post())
+	transportGroup.POST("", h.Post())
+	transportGroup.PUT("/:transport_id", h.Put())
+	transportGroup.DELETE("/:transport_id", h.Delete())
 }

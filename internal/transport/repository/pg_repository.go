@@ -51,3 +51,14 @@ func (r *transportRepo) Delete(ctx context.Context, ID uuid.UUID) error {
 	result := r.db.Delete(&models.Transport{}, ID)
 	return result.Error
 }
+
+func (r *transportRepo) Search(ctx context.Context, searchParams *models.SearchToRent) ([]*models.Transport, error) {
+	var transports []*models.Transport
+
+	result := r.db.Raw(searchToRent, searchParams.Lat, searchParams.Lat, searchParams.Long, searchParams.Radius, searchParams.Type).Scan(&transports)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return transports, nil
+}

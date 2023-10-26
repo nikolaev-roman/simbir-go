@@ -15,11 +15,10 @@ import (
 type transportUC struct {
 	cfg           *config.Config
 	transportRepo transport.Repository
-	accountRepo   account.Repository
 }
 
 func NewTransportUseCase(cfg *config.Config, transportRepo transport.Repository, accountRepo account.Repository) transport.UseCase {
-	return &transportUC{cfg: cfg, transportRepo: transportRepo, accountRepo: accountRepo}
+	return &transportUC{cfg: cfg, transportRepo: transportRepo}
 }
 
 func (u *transportUC) Create(ctx context.Context, transport *models.Transport) (*models.Transport, error) {
@@ -77,4 +76,57 @@ func (u *transportUC) Delete(ctx context.Context, ID uuid.UUID) error {
 	}
 
 	return u.transportRepo.Delete(ctx, ID)
+}
+
+func (u *transportUC) RentingStart(ctx context.Context, transportID uuid.UUID) (*models.Transport, error) {
+
+	account, err := utils.GetAccountFromCtx(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	transportByID, err := u.GetByID(ctx, transportID)
+	if err != nil {
+		return nil, err
+	}
+
+	if transportByID.OwnerID == account.ID {
+		return nil, errors.New("You cannot rent your own transport")
+	}
+
+	if transportByID.CanBeRented != true {
+		return nil, errors.New("Transport already rented")
+	}
+
+	transportByID.CanBeRented = false
+
+	return u.transportRepo.Update(ctx, transportByID)
+}
+
+func (u *transportUC) RentingClose(ctx context.Context, transport *models.Transport) (*models.Transport, error) {
+
+	transport.CanBeRented = true
+
+	return u.transportRepo.Update(ctx, transport)
+}
+
+func (u *transportUC) RentingEnd(ctx context.Context, ID uuid.UUID, coordinates *models.Coordinates) (*models.Transport, error) {
+	transport, err := u.GetByID(ctx, ID)
+	if err != nil {
+		return nil, err
+	}
+
+	transport.Latitude = coordinates.Latitude
+	transport.Longitude = coordinates.Longitude
+	transport.CanBeRented = true
+	updated, err := u.transportRepo.Update(ctx, transport)
+	if err != nil {
+		return nil, err
+	}
+
+	return updated, nil
+}
+
+func (u *transportUC) Search(ctx context.Context, searchParams *models.SearchToRent) ([]*models.Transport, error) {
+	return u.transportRepo.Search(ctx, searchParams)
 }

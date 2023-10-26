@@ -1,6 +1,10 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"errors"
+
+	"github.com/google/uuid"
+)
 
 type Transport struct {
 	ID            uuid.UUID `json:"id" gorm:"type:uuid;default:gen_random_uuid();primarykey" validate:"omitempty,uuid"`
@@ -15,4 +19,20 @@ type Transport struct {
 	Longitude     float64   `json:"longitude" gorm:"not null" validate:"required"`
 	MinutePrice   float64   `json:"minutePrice"`
 	DayPrice      float64   `json:"dayPrice"`
+}
+
+type Coordinates struct {
+	Latitude  float64
+	Longitude float64
+}
+
+func (t *Transport) GetPriceByType(rentType string) (float64, error) {
+	switch rentType {
+	case "Minutes":
+		return t.MinutePrice, nil
+	case "Day":
+		return t.DayPrice, nil
+	default:
+		return 0, errors.New("bad type of price")
+	}
 }

@@ -11,4 +11,5 @@ func MigrateDb(DB *gorm.DB) {
 	fmt.Println("migrate")
 	DB.AutoMigrate(&models.Account{})
 	DB.AutoMigrate(&models.Transport{})
+	DB.AutoMigrate(&models.Rent{})
 }

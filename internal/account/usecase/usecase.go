@@ -48,7 +48,7 @@ func (u *accountUC) SignIn(ctx context.Context, account *models.Account) (string
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub": foundAccount.ID,
-		"exp": time.Now().Add(time.Hour).Unix(),
+		"exp": time.Now().Add(time.Hour * 24).Unix(),
 	})
 
 	tokenString, err := token.SignedString([]byte(u.cfg.Server.JwtSecretKey))

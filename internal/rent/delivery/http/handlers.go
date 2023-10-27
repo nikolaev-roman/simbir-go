@@ -145,3 +145,43 @@ func (h *rentHandlers) SearchTransport() gin.HandlerFunc {
 		c.JSON(http.StatusOK, transports)
 	}
 }
+
+func (h *rentHandlers) MyHistory() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		ctx := utils.GetRequestCtx(c)
+
+		account, err := utils.GetAccountFromCtx(ctx)
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+			return
+		}
+
+		rentHistory, err := h.rentUC.HistoryByAccount(ctx, account.ID)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, rentHistory)
+	}
+}
+
+func (h *rentHandlers) TransportHistory() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		ctx := utils.GetRequestCtx(c)
+
+		transportID, err := uuid.Parse(c.Param("transport_id"))
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		rentHistory, err := h.rentUC.HistoryByTransport(ctx, transportID)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, rentHistory)
+	}
+}

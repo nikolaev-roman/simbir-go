@@ -18,6 +18,8 @@ func MapRentRoutes(
 
 	rentGroup.Use(mv.CheckAuth(us, cfg))
 	rentGroup.GET("/:rent_id", h.Get())
+	rentGroup.GET("/MyHistory", h.MyHistory())
+	rentGroup.GET("/TransportHistory/:transport_id", h.TransportHistory())
 	rentGroup.POST("/New/:transport_id", h.New())
 	rentGroup.POST("/End/:rent_id", h.End())
 }

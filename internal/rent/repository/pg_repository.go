@@ -50,3 +50,19 @@ func (r *rentRepo) Delete(ctx context.Context, ID uuid.UUID) error {
 	result := r.db.Delete(&models.Transport{}, ID)
 	return result.Error
 }
+
+func (r *rentRepo) GetHystoryByAccount(ctx context.Context, accountID uuid.UUID) ([]*models.Rent, error) {
+	rents := make([]*models.Rent, 0)
+
+	r.db.Where("user_id = ?", accountID).Find(&rents)
+
+	return rents, nil
+}
+
+func (r *rentRepo) GetHystoryByTransport(ctx context.Context, transportID uuid.UUID) ([]*models.Rent, error) {
+	rents := make([]*models.Rent, 0)
+
+	r.db.Where("transport_id = ?", transportID).Find(&rents)
+
+	return rents, nil
+}

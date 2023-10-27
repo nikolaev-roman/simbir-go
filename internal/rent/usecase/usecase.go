@@ -118,3 +118,11 @@ func (u *rentUC) GetByID(ctx context.Context, rentID uuid.UUID) (*models.Rent, e
 func (u *rentUC) SearchTransportToRent(ctx context.Context, searchParams *models.SearchToRent) ([]*models.Transport, error) {
 	return u.transportUC.Search(ctx, searchParams)
 }
+
+func (u *rentUC) HistoryByAccount(ctx context.Context, accountID uuid.UUID) ([]*models.Rent, error) {
+	return u.rentRepo.GetHystoryByAccount(ctx, accountID)
+}
+
+func (u *rentUC) HistoryByTransport(ctx context.Context, transportID uuid.UUID) ([]*models.Rent, error) {
+	return u.rentRepo.GetHystoryByTransport(ctx, transportID)
+}

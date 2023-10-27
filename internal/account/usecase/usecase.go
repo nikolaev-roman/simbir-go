@@ -30,6 +30,8 @@ func (u *accountUC) Register(ctx context.Context, account *models.Account) (*mod
 	}
 
 	account.Password = string(hash)
+	account.Balance = 0
+	account.IsAdmin = false
 
 	return u.accountRepo.Create(ctx, account)
 }

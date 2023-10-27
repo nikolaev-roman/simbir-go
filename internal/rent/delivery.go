@@ -7,4 +7,6 @@ type Handlers interface {
 	Get() gin.HandlerFunc
 	End() gin.HandlerFunc
 	SearchTransport() gin.HandlerFunc
+	MyHistory() gin.HandlerFunc
+	TransportHistory() gin.HandlerFunc
 }

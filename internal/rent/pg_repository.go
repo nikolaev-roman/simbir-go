@@ -12,4 +12,7 @@ type Repository interface {
 	Update(ctx context.Context, rent *models.Rent) (*models.Rent, error)
 	GetByID(ctx context.Context, ID uuid.UUID) (*models.Rent, error)
 	Delete(ctx context.Context, ID uuid.UUID) error
+
+	GetHystoryByAccount(ctx context.Context, accountID uuid.UUID) ([]*models.Rent, error)
+	GetHystoryByTransport(ctx context.Context, transportID uuid.UUID) ([]*models.Rent, error)
 }

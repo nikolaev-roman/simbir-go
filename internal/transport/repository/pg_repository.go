@@ -53,7 +53,7 @@ func (r *transportRepo) Delete(ctx context.Context, ID uuid.UUID) error {
 }
 
 func (r *transportRepo) Search(ctx context.Context, searchParams *models.SearchToRent) ([]*models.Transport, error) {
-	var transports []*models.Transport
+	transports := make([]*models.Transport, 0)
 
 	result := r.db.Raw(searchToRent, searchParams.Lat, searchParams.Lat, searchParams.Long, searchParams.Radius, searchParams.Type).Scan(&transports)
 	if result.Error != nil {

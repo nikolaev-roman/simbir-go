@@ -26,6 +26,12 @@ type Coordinates struct {
 	Longitude float64
 }
 
+type TransportSearchParams struct {
+	Start         int    `json:"start"`
+	Count         int    `json:"count"`
+	TransportType string `json:"transportType"`
+}
+
 func (t *Transport) GetPriceByType(rentType string) (float64, error) {
 	switch rentType {
 	case "Minutes":

@@ -27,6 +27,22 @@ func NewRentUseCase(
 	return &rentUC{cfg: cfg, rentRepo: rentRepo, transportUC: transportUC}
 }
 
+func (u *rentUC) Create(ctx context.Context, rent *models.Rent) (*models.Rent, error) {
+	return u.rentRepo.Create(ctx, rent)
+}
+
+func (u *rentUC) Update(ctx context.Context, rent *models.Rent) (*models.Rent, error) {
+	return u.rentRepo.Update(ctx, rent)
+}
+
+func (u *rentUC) GetByID(ctx context.Context, rentID uuid.UUID) (*models.Rent, error) {
+	return u.rentRepo.GetByID(ctx, rentID)
+}
+
+func (u *rentUC) Delete(ctx context.Context, rentID uuid.UUID) error {
+	return u.rentRepo.Delete(ctx, rentID)
+}
+
 func (u *rentUC) Start(ctx context.Context, transportID uuid.UUID, rentType string) (*models.Rent, error) {
 
 	account, err := utils.GetAccountFromCtx(ctx)
@@ -91,14 +107,14 @@ func (u *rentUC) End(ctx context.Context, rentID uuid.UUID, coordinates *models.
 	return endedRent, nil
 }
 
-func (u *rentUC) GetByID(ctx context.Context, rentID uuid.UUID) (*models.Rent, error) {
+func (u *rentUC) GetByIDForUser(ctx context.Context, rentID uuid.UUID) (*models.Rent, error) {
 
 	account, err := utils.GetAccountFromCtx(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	rent, err := u.rentRepo.GetByID(ctx, rentID)
+	rent, err := u.GetByID(ctx, rentID)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +124,7 @@ func (u *rentUC) GetByID(ctx context.Context, rentID uuid.UUID) (*models.Rent, e
 		return nil, err
 	}
 
-	if account.ID != rent.UserID && account.ID != transport.OwnerID {
+	if account.IsAdmin != true || (account.ID != rent.UserID && account.ID != transport.OwnerID) {
 		return nil, errors.New("forbidden")
 	}
 
@@ -116,7 +132,7 @@ func (u *rentUC) GetByID(ctx context.Context, rentID uuid.UUID) (*models.Rent, e
 }
 
 func (u *rentUC) SearchTransportToRent(ctx context.Context, searchParams *models.SearchToRent) ([]*models.Transport, error) {
-	return u.transportUC.Search(ctx, searchParams)
+	return u.transportUC.SearchToRent(ctx, searchParams)
 }
 
 func (u *rentUC) HistoryByAccount(ctx context.Context, accountID uuid.UUID) ([]*models.Rent, error) {

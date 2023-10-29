@@ -57,7 +57,7 @@ func (h *rentHandlers) Get() gin.HandlerFunc {
 			return
 		}
 
-		rent, err := h.rentUC.GetByID(ctx, rentID)
+		rent, err := h.rentUC.GetByIDForUser(ctx, rentID)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return

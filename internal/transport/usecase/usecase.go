@@ -127,6 +127,10 @@ func (u *transportUC) RentingEnd(ctx context.Context, ID uuid.UUID, coordinates 
 	return updated, nil
 }
 
-func (u *transportUC) Search(ctx context.Context, searchParams *models.SearchToRent) ([]*models.Transport, error) {
+func (u *transportUC) SearchToRent(ctx context.Context, searchParams *models.SearchToRent) ([]*models.Transport, error) {
+	return u.transportRepo.SearchToRent(ctx, searchParams)
+}
+
+func (u *transportUC) Search(ctx context.Context, searchParams models.TransportSearchParams) ([]*models.Transport, error) {
 	return u.transportRepo.Search(ctx, searchParams)
 }

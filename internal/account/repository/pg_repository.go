@@ -54,6 +54,15 @@ func (r *accountRepo) Update(ctx context.Context, account *models.Account) (*mod
 	return account, nil
 }
 
+func (r *accountRepo) Delete(ctx context.Context, accountID uuid.UUID) error {
+	result := r.db.Delete(&models.Account{}, accountID)
+	if result.Error != nil {
+		return errors.New("No account found")
+	}
+
+	return nil
+}
+
 func (r *accountRepo) GetByUserName(ctx context.Context, account *models.Account) (*models.Account, error) {
 	foundAccount := &models.Account{}
 
@@ -63,4 +72,15 @@ func (r *accountRepo) GetByUserName(ctx context.Context, account *models.Account
 	}
 
 	return foundAccount, nil
+}
+
+func (r *accountRepo) Search(ctx context.Context, params models.AccountSearchParams) ([]*models.Account, error) {
+	accounts := make([]*models.Account, 0)
+
+	result := r.db.Offset(params.Start).Limit(params.Count).Find(&accounts)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return accounts, nil
 }

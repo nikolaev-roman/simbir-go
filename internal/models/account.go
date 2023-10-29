@@ -11,3 +11,8 @@ type Account struct {
 	IsAdmin  bool      `json:"isAdmin" gorm:"not null;default:false"`
 	Balance  float64   `json:"balance" gorm:"not null;default:0"`
 }
+
+type AccountSearchParams struct {
+	Start int `json:"start"`
+	Count int `json:"count"`
+}

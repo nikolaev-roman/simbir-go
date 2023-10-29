@@ -82,3 +82,22 @@ func (mw *MiddlewareManager) CheckAuth(accountUC account.UseCase, cfg *config.Co
 		}
 	}
 }
+
+func (mw *MiddlewareManager) CheckAdmin(accountUC account.UseCase, cfg *config.Config) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		ctx := utils.GetRequestCtx(c)
+
+		account, err := utils.GetAccountFromCtx(ctx)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+			return
+		}
+
+		if account.IsAdmin != true {
+			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"error": "not admin"})
+			return
+		}
+
+		c.Next()
+	}
+}

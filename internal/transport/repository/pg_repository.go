@@ -52,10 +52,21 @@ func (r *transportRepo) Delete(ctx context.Context, ID uuid.UUID) error {
 	return result.Error
 }
 
-func (r *transportRepo) Search(ctx context.Context, searchParams *models.SearchToRent) ([]*models.Transport, error) {
+func (r *transportRepo) SearchToRent(ctx context.Context, searchParams *models.SearchToRent) ([]*models.Transport, error) {
 	transports := make([]*models.Transport, 0)
 
 	result := r.db.Raw(searchToRent, searchParams.Lat, searchParams.Lat, searchParams.Long, searchParams.Radius, searchParams.Type).Scan(&transports)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return transports, nil
+}
+
+func (r *transportRepo) Search(ctx context.Context, searchParams models.TransportSearchParams) ([]*models.Transport, error) {
+	transports := make([]*models.Transport, 0)
+
+	result := r.db.Offset(searchParams.Start).Limit(searchParams.Count).Find(&transports)
 	if result.Error != nil {
 		return nil, result.Error
 	}

@@ -62,6 +62,17 @@ func (u *accountUC) SignIn(ctx context.Context, account *models.Account) (string
 	return tokenString, nil
 }
 
+func (u *accountUC) Create(ctx context.Context, account *models.Account) (*models.Account, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(account.Password), 10)
+	if err != nil {
+		return nil, errors.New("failed to hash password")
+	}
+
+	account.Password = string(hash)
+
+	return u.accountRepo.Create(ctx, account)
+}
+
 func (u *accountUC) Update(ctx context.Context, account *models.Account) (*models.Account, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(account.Password), 10)
 	if err != nil {
@@ -73,6 +84,14 @@ func (u *accountUC) Update(ctx context.Context, account *models.Account) (*model
 	return u.accountRepo.Update(ctx, account)
 }
 
+func (u *accountUC) Delete(ctx context.Context, accountID uuid.UUID) error {
+	return u.accountRepo.Delete(ctx, accountID)
+}
+
 func (u *accountUC) GetByID(ctx context.Context, ID uuid.UUID) (*models.Account, error) {
 	return u.accountRepo.GetByID(ctx, ID)
+}
+
+func (u *accountUC) Search(ctx context.Context, params models.AccountSearchParams) ([]*models.Account, error) {
+	return u.accountRepo.Search(ctx, params)
 }

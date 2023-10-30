@@ -20,6 +20,31 @@ definitions:
       username:
         type: string
     type: object
+  models.Rent:
+    properties:
+      finalPrice:
+        type: number
+      id:
+        type: string
+      priceOfUnit:
+        type: number
+      priceType:
+        type: string
+      timeEnd:
+        type: string
+      timeStart:
+        type: string
+      transportId:
+        type: string
+      userId:
+        type: string
+    required:
+    - priceOfUnit
+    - priceType
+    - timeStart
+    - transportId
+    - userId
+    type: object
   models.Transport:
     properties:
       canBeRented:
@@ -153,8 +178,648 @@ paths:
           description: Internal Server Error
       security:
       - Authorization: []
+      summary: Update
       tags:
       - Account
+  /Admin/Account:
+    get:
+      consumes:
+      - application/json
+      description: AccountList
+      parameters:
+      - description: start
+        in: query
+        name: start
+        required: true
+        type: string
+      - description: count
+        in: query
+        name: count
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Account'
+            type: array
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: AccountList
+      tags:
+      - Admin
+    post:
+      consumes:
+      - application/json
+      description: Create Account
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Account'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Account'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Create Account
+      tags:
+      - Admin
+    put:
+      consumes:
+      - application/json
+      description: Update Account
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Account'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Account'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Update Account
+      tags:
+      - Admin
+  /Admin/Account/{account_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Account
+      parameters:
+      - description: account ID
+        in: path
+        name: account_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Account'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Delete Account
+      tags:
+      - Admin
+    get:
+      consumes:
+      - application/json
+      description: Account
+      parameters:
+      - description: account ID
+        in: path
+        name: account_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Account'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Account
+      tags:
+      - Admin
+  /Admin/Rent/:
+    post:
+      consumes:
+      - application/json
+      description: Create Rent
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Rent'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Rent'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Create Rent
+      tags:
+      - Admin
+  /Admin/Rent/{rent_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Rent
+      parameters:
+      - description: Rent ID
+        in: path
+        name: rent_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Delete Rent
+      tags:
+      - Admin
+    get:
+      consumes:
+      - application/json
+      description: Get Rent
+      parameters:
+      - description: Rent ID
+        in: path
+        name: rent_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Transport'
+        "500":
+          description: Internal Server Error
+      summary: Get Rent
+      tags:
+      - Admin
+    put:
+      consumes:
+      - application/json
+      description: Update Rent
+      parameters:
+      - description: Rent ID
+        in: path
+        name: rent_id
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Rent'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Rent'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Update Rent
+      tags:
+      - Admin
+  /Admin/Rent/End/{rent_id}:
+    post:
+      consumes:
+      - application/json
+      description: End rent
+      parameters:
+      - description: Rent ID
+        in: path
+        name: rent_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Rent'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: End rent
+      tags:
+      - Admin
+  /Admin/Rent/TransportHistory/{transport_id}:
+    get:
+      consumes:
+      - application/json
+      description: Transport History
+      parameters:
+      - description: Trasnport ID
+        in: path
+        name: transport_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Rent'
+            type: array
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Transport History
+      tags:
+      - Admin
+  /Admin/Rent/UserHistory/{account_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get user history
+      parameters:
+      - description: Account ID
+        in: path
+        name: account_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Rent'
+            type: array
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Get user history
+      tags:
+      - Admin
+  /Admin/Transport:
+    get:
+      consumes:
+      - application/json
+      description: Transport List
+      parameters:
+      - description: start
+        in: query
+        name: start
+        required: true
+        type: string
+      - description: count
+        in: query
+        name: count
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Transport'
+            type: array
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Transport List
+      tags:
+      - Admin
+  /Admin/Transport/:
+    post:
+      consumes:
+      - application/json
+      description: Create Transport
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Transport'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Transport'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Create Transport
+      tags:
+      - Admin
+  /Admin/Transport/{transport_id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete transport
+      parameters:
+      - description: Trasnport ID
+        in: path
+        name: transport_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: delete transport
+      tags:
+      - Admin
+    get:
+      consumes:
+      - application/json
+      description: Transport
+      parameters:
+      - description: Trasnport ID
+        in: path
+        name: transport_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Transport'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Transport
+      tags:
+      - Admin
+    put:
+      consumes:
+      - application/json
+      description: update transport
+      parameters:
+      - description: Trasnport ID
+        in: path
+        name: transport_id
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Transport'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Transport'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: update transport
+      tags:
+      - Admin
+  /Payment/Hesoyam/{account_id}:
+    post:
+      consumes:
+      - application/json
+      description: Enrich balance
+      parameters:
+      - description: account ID
+        in: path
+        name: account_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Account'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Enrich balance
+      tags:
+      - Payment
+  /Rent/{rent_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get rent info
+      parameters:
+      - description: Rent ID
+        in: path
+        name: rent_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Transport'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Get rent info
+      tags:
+      - Rent
+  /Rent/End/{rent_id}:
+    post:
+      consumes:
+      - application/json
+      description: End rent
+      parameters:
+      - description: Rent ID
+        in: path
+        name: rent_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Rent'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: End rent
+      tags:
+      - Rent
+  /Rent/MyHistory:
+    get:
+      consumes:
+      - application/json
+      description: Get user history
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Rent'
+            type: array
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Get user history
+      tags:
+      - Rent
+  /Rent/New/{transport_id}:
+    post:
+      consumes:
+      - application/json
+      description: New rent
+      parameters:
+      - description: Transport ID
+        in: path
+        name: transport_id
+        required: true
+        type: string
+      - description: rent type
+        in: query
+        name: rentType
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Rent'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: New rent
+      tags:
+      - Rent
+  /Rent/Transport:
+    get:
+      consumes:
+      - application/json
+      description: Get Transports to rent
+      parameters:
+      - description: latitude
+        in: query
+        name: lat
+        required: true
+        type: string
+      - description: longitude
+        in: query
+        name: long
+        required: true
+        type: string
+      - description: radius
+        in: query
+        name: radius
+        required: true
+        type: string
+      - description: transport type
+        in: query
+        name: type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Transport'
+            type: array
+        "500":
+          description: Internal Server Error
+      summary: Get Transports to rent
+      tags:
+      - Rent
+  /Rent/TransportHistory/{transport_id}:
+    get:
+      consumes:
+      - application/json
+      description: Transport History
+      parameters:
+      - description: Trasnport ID
+        in: path
+        name: transport_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Rent'
+            type: array
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Transport History
+      tags:
+      - Rent
   /Transport:
     post:
       consumes:
@@ -178,6 +843,7 @@ paths:
           description: Internal Server Error
       security:
       - Authorization: []
+      summary: Create new transport
       tags:
       - Transport
   /Transport/{transport_id}:
@@ -200,6 +866,7 @@ paths:
           description: Internal Server Error
       security:
       - Authorization: []
+      summary: delete transport
       tags:
       - Transport
     get:
@@ -221,6 +888,7 @@ paths:
             $ref: '#/definitions/models.Transport'
         "500":
           description: Internal Server Error
+      summary: get transport info by id
       tags:
       - Transport
     put:
@@ -250,6 +918,7 @@ paths:
           description: Internal Server Error
       security:
       - Authorization: []
+      summary: update transport
       tags:
       - Transport
 securityDefinitions:

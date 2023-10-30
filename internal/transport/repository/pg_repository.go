@@ -55,7 +55,13 @@ func (r *transportRepo) Delete(ctx context.Context, ID uuid.UUID) error {
 func (r *transportRepo) SearchToRent(ctx context.Context, searchParams *models.SearchToRent) ([]*models.Transport, error) {
 	transports := make([]*models.Transport, 0)
 
-	result := r.db.Raw(searchToRent, searchParams.Lat, searchParams.Lat, searchParams.Long, searchParams.Radius, searchParams.Type).Scan(&transports)
+	var result *gorm.DB
+	if searchParams.Type != "All" {
+		result = r.db.Raw(searchToRentWithType, searchParams.Lat, searchParams.Lat, searchParams.Long, searchParams.Radius, searchParams.Type).Scan(&transports)
+	} else {
+		result = r.db.Raw(searchToRentWithoutType, searchParams.Lat, searchParams.Lat, searchParams.Long, searchParams.Radius).Scan(&transports)
+	}
+
 	if result.Error != nil {
 		return nil, result.Error
 	}

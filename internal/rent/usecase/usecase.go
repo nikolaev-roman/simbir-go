@@ -132,6 +132,10 @@ func (u *rentUC) GetByIDForUser(ctx context.Context, rentID uuid.UUID) (*models.
 }
 
 func (u *rentUC) SearchTransportToRent(ctx context.Context, searchParams *models.SearchToRent) ([]*models.Transport, error) {
+	if !searchParams.IsValidType() {
+		return nil, errors.New("Invalid type")
+	}
+
 	return u.transportUC.SearchToRent(ctx, searchParams)
 }
 

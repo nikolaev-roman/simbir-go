@@ -22,6 +22,19 @@ func NewRentHandlers(cfg *config.Config, rentUC rent.UseCase) rent.Handlers {
 	return &rentHandlers{cfg: cfg, rentUC: rentUC}
 }
 
+// Create new rent
+// @Summary		New rent
+// @Schemes
+// @Description	New rent
+// @Tags		Rent
+// @Accept		json
+// @Produce		json
+// @Security	Authorization
+// @Param   	transport_id path string true "Transport ID"
+// @Param   	rentType query string true "rent type"
+// @Success		200	{object} models.Rent
+// @Failure		500
+// @Router		/Rent/New/{transport_id} [post]
 func (h *rentHandlers) New() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -46,18 +59,18 @@ func (h *rentHandlers) New() gin.HandlerFunc {
 	}
 }
 
-// Get Rent Transport
-// @Summary
+// Get rent
+// @Summary		Get rent info
 // @Schemes
-// @Description	Get Rent Transport
+// @Description	Get rent info
 // @Tags		Rent
 // @Accept		json
 // @Produce		json
-// @Security 	Authorization
-// @Param   	request body models.Transport true "query params"
+// @Security	Authorization
+// @Param   	rent_id path string true "Rent ID"
 // @Success		200	{object} models.Transport
 // @Failure		500
-// @Router		/Transport [post]
+// @Router		/Rent/{rent_id} [get]
 func (h *rentHandlers) Get() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -80,6 +93,18 @@ func (h *rentHandlers) Get() gin.HandlerFunc {
 	}
 }
 
+// End rent
+// @Summary		End rent
+// @Schemes
+// @Description	End rent
+// @Tags		Rent
+// @Accept		json
+// @Produce		json
+// @Security	Authorization
+// @Param   	rent_id path string true "Rent ID"
+// @Success		200	{object} models.Rent
+// @Failure		500
+// @Router		/Rent/End/{rent_id} [post]
 func (h *rentHandlers) End() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := utils.GetRequestCtx(c)
@@ -115,6 +140,20 @@ func (h *rentHandlers) End() gin.HandlerFunc {
 	}
 }
 
+// SearchTransport
+// @Summary		Get Transports to rent
+// @Schemes
+// @Description	Get Transports to rent
+// @Tags		Rent
+// @Accept		json
+// @Produce		json
+// @Param   	lat query string true "latitude"
+// @Param   	long query string true "longitude"
+// @Param   	radius query string true "radius"
+// @Param   	type query string true "transport type"
+// @Success		200	{array} models.Transport
+// @Failure		500
+// @Router		/Rent/Transport [get]
 func (h *rentHandlers) SearchTransport() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := utils.GetRequestCtx(c)
@@ -158,6 +197,17 @@ func (h *rentHandlers) SearchTransport() gin.HandlerFunc {
 	}
 }
 
+// My History
+// @Summary		Get user history
+// @Schemes
+// @Description	Get user history
+// @Tags		Rent
+// @Accept		json
+// @Produce		json
+// @Security	Authorization
+// @Success		200	{array} models.Rent
+// @Failure		500
+// @Router		/Rent/MyHistory [get]
 func (h *rentHandlers) MyHistory() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := utils.GetRequestCtx(c)
@@ -178,6 +228,18 @@ func (h *rentHandlers) MyHistory() gin.HandlerFunc {
 	}
 }
 
+// Transport History
+// @Summary		Transport History
+// @Schemes
+// @Description	Transport History
+// @Tags		Rent
+// @Accept		json
+// @Produce		json
+// @Security	Authorization
+// @Param  		transport_id path string true "Trasnport ID"
+// @Success		200	{array} models.Rent
+// @Failure		500
+// @Router		/Rent/TransportHistory/{transport_id} [get]
 func (h *rentHandlers) TransportHistory() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := utils.GetRequestCtx(c)

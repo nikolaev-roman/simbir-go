@@ -21,7 +21,7 @@ func NewAccountHandlers(cfg *config.Config, transportUC transport.UseCase) trans
 }
 
 // Create
-// @Summary
+// @Summary		Create new transport
 // @Schemes
 // @Description	Create new transport
 // @Tags		Transport
@@ -58,7 +58,7 @@ func (h *transportHandlers) Post() gin.HandlerFunc {
 }
 
 // GET
-// @Summary
+// @Summary 	get transport info by id
 // @Schemes
 // @Description	get transport info by id
 // @Tags		Transport
@@ -90,7 +90,7 @@ func (h transportHandlers) Get() gin.HandlerFunc {
 }
 
 // Update
-// @Summary
+// @Summary 	update transport
 // @Schemes
 // @Description	update transport
 // @Tags		Transport
@@ -131,7 +131,7 @@ func (h *transportHandlers) Put() gin.HandlerFunc {
 }
 
 // Delete
-// @Summary
+// @Summary 	delete transport
 // @Schemes
 // @Description	delete transport
 // @Tags		Transport

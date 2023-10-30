@@ -35,6 +35,19 @@ func NewAdminHandlers(cfg *config.Config,
 	}
 }
 
+// AccountList
+// @Summary     AccountList
+// @Schemes
+// @Description	AccountList
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security 	Authorization
+// @Param   	start query string true "start"
+// @Param   	count query string true "count"
+// @Success		200	{array} models.Account
+// @Failure		500
+// @Router		/Admin/Account [get]
 func (h *adminHandlers) GetAccountList() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := utils.GetRequestCtx(c)
@@ -65,6 +78,18 @@ func (h *adminHandlers) GetAccountList() gin.HandlerFunc {
 	}
 }
 
+// Account
+// @Summary     Account
+// @Schemes
+// @Description	Account
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security 	Authorization
+// @Param   	account_id path string true "account ID"
+// @Success		200	{object} models.Account
+// @Failure		500
+// @Router		/Admin/Account/{account_id} [get]
 func (h *adminHandlers) GetAccount() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := utils.GetRequestCtx(c)
@@ -85,6 +110,18 @@ func (h *adminHandlers) GetAccount() gin.HandlerFunc {
 	}
 }
 
+// Create Account
+// @Summary     Create Account
+// @Schemes
+// @Description	Create Account
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security 	Authorization
+// @Param   	request body models.Account true "query params"
+// @Success		200	{object} models.Account
+// @Failure		500
+// @Router		/Admin/Account [post]
 func (h *adminHandlers) CreateAccount() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := utils.GetRequestCtx(c)
@@ -109,6 +146,18 @@ func (h *adminHandlers) CreateAccount() gin.HandlerFunc {
 	}
 }
 
+// Update Account
+// @Summary     Update Account
+// @Schemes
+// @Description	Update Account
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security 	Authorization
+// @Param   	request body models.Account true "query params"
+// @Success		200	{object} models.Account
+// @Failure		500
+// @Router		/Admin/Account [put]
 func (h *adminHandlers) UpdateAccount() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := utils.GetRequestCtx(c)
@@ -132,6 +181,18 @@ func (h *adminHandlers) UpdateAccount() gin.HandlerFunc {
 	}
 }
 
+// Delete Account
+// @Summary     Delete Account
+// @Schemes
+// @Description	Delete Account
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security 	Authorization
+// @Param   	account_id path string true "account ID"
+// @Success		200	{object} models.Account
+// @Failure		500
+// @Router		/Admin/Account/{account_id} [delete]
 func (h *adminHandlers) DeleteAccount() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -152,6 +213,19 @@ func (h *adminHandlers) DeleteAccount() gin.HandlerFunc {
 	}
 }
 
+// Transport List
+// @Summary     Transport List
+// @Schemes
+// @Description	Transport List
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security 	Authorization
+// @Param   	start query string true "start"
+// @Param   	count query string true "count"
+// @Success		200	{array} models.Transport
+// @Failure		500
+// @Router		/Admin/Transport [get]
 func (h *adminHandlers) GetTransportList() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := utils.GetRequestCtx(c)
@@ -181,6 +255,18 @@ func (h *adminHandlers) GetTransportList() gin.HandlerFunc {
 	}
 }
 
+// Transport
+// @Summary     Transport
+// @Schemes
+// @Description	Transport
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security 	Authorization
+// @Param  		transport_id path string true "Trasnport ID"
+// @Success		200	{object} models.Transport
+// @Failure		500
+// @Router		/Admin/Transport/{transport_id} [get]
 func (h *adminHandlers) GetTransport() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -203,6 +289,18 @@ func (h *adminHandlers) GetTransport() gin.HandlerFunc {
 	}
 }
 
+// Create Transport
+// @Summary 	Create Transport
+// @Schemes
+// @Description	Create Transport
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security 	Authorization
+// @Param   	request body models.Transport true "query params"
+// @Success		200	{object} models.Transport
+// @Failure		500
+// @Router		/Admin/Transport/ [post]
 func (h *adminHandlers) CreateTransport() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -228,6 +326,19 @@ func (h *adminHandlers) CreateTransport() gin.HandlerFunc {
 	}
 }
 
+// Update
+// @Summary 	update transport
+// @Schemes
+// @Description	update transport
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security 	Authorization
+// @Param  		transport_id path string true "Trasnport ID"
+// @Param   	request body models.Transport true "query params"
+// @Success		200	{object} models.Transport
+// @Failure		500
+// @Router		/Admin/Transport/{transport_id} [put]
 func (h *adminHandlers) UpdateTransport() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -261,6 +372,18 @@ func (h *adminHandlers) UpdateTransport() gin.HandlerFunc {
 	}
 }
 
+// Delete
+// @Summary 	delete transport
+// @Schemes
+// @Description	delete transport
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security 	Authorization
+// @Param  		transport_id path string true "Trasnport ID"
+// @Success		200
+// @Failure		500
+// @Router		/Admin/Transport/{transport_id} [delete]
 func (h *adminHandlers) DeleteTransport() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -282,6 +405,17 @@ func (h *adminHandlers) DeleteTransport() gin.HandlerFunc {
 	}
 }
 
+// Get Rent
+// @Summary 	Get Rent
+// @Schemes
+// @Description	Get Rent
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Param  		rent_id path string true "Rent ID"
+// @Success		200	{object} models.Transport
+// @Failure		500
+// @Router		/Admin/Rent/{rent_id} [get]
 func (h *adminHandlers) GetRent() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -304,6 +438,18 @@ func (h *adminHandlers) GetRent() gin.HandlerFunc {
 	}
 }
 
+// User History
+// @Summary		Get user history
+// @Schemes
+// @Description	Get user history
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security	Authorization
+// @Param  		account_id path string true "Account ID"
+// @Success		200	{array} models.Rent
+// @Failure		500
+// @Router		/Admin/Rent/UserHistory/{account_id} [get]
 func (h *adminHandlers) GetRentUserHistory() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := utils.GetRequestCtx(c)
@@ -324,6 +470,18 @@ func (h *adminHandlers) GetRentUserHistory() gin.HandlerFunc {
 	}
 }
 
+// Transport History
+// @Summary		Transport History
+// @Schemes
+// @Description	Transport History
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security	Authorization
+// @Param  		transport_id path string true "Trasnport ID"
+// @Success		200	{array} models.Rent
+// @Failure		500
+// @Router		/Admin/Rent/TransportHistory/{transport_id} [get]
 func (h *adminHandlers) GetRentTransportHistory() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := utils.GetRequestCtx(c)
@@ -344,6 +502,18 @@ func (h *adminHandlers) GetRentTransportHistory() gin.HandlerFunc {
 	}
 }
 
+// Create Rent
+// @Summary 	Create Rent
+// @Schemes
+// @Description	Create Rent
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security 	Authorization
+// @Param   	request body models.Rent true "query params"
+// @Success		200	{object} models.Rent
+// @Failure		500
+// @Router		/Admin/Rent/ [post]
 func (h *adminHandlers) CreateRent() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -369,6 +539,18 @@ func (h *adminHandlers) CreateRent() gin.HandlerFunc {
 	}
 }
 
+// End rent
+// @Summary		End rent
+// @Schemes
+// @Description	End rent
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security	Authorization
+// @Param   	rent_id path string true "Rent ID"
+// @Success		200	{object} models.Rent
+// @Failure		500
+// @Router		/Admin/Rent/End/{rent_id} [post]
 func (h *adminHandlers) EndRent() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -406,6 +588,19 @@ func (h *adminHandlers) EndRent() gin.HandlerFunc {
 	}
 }
 
+// Update Rent
+// @Summary  Update Rent
+// @Schemes
+// @Description Update Rent
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security 	Authorization
+// @Param   	rent_id path string true "Rent ID"
+// @Param   	request body models.Rent true "query params"
+// @Success		200	{object} models.Rent
+// @Failure		500
+// @Router		/Admin/Rent/{rent_id} [put]
 func (h *adminHandlers) UpdateRent() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -439,6 +634,18 @@ func (h *adminHandlers) UpdateRent() gin.HandlerFunc {
 	}
 }
 
+// Delete Rent
+// @Summary  Delete Rent
+// @Schemes
+// @Description Delete Rent
+// @Tags		Admin
+// @Accept		json
+// @Produce		json
+// @Security 	Authorization
+// @Param   	rent_id path string true "Rent ID"
+// @Success		200
+// @Failure		500
+// @Router		/Admin/Rent/{rent_id} [delete]
 func (h *adminHandlers) DeleteRent() gin.HandlerFunc {
 	return func(c *gin.Context) {
 

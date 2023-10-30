@@ -131,7 +131,7 @@ func (h *accountHandlers) GetMe() gin.HandlerFunc {
 }
 
 // Update
-// @Summary
+// @Summary     Update
 // @Schemes
 // @Description	update account info
 // @Tags		Account

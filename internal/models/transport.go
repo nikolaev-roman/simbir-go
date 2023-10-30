@@ -10,7 +10,7 @@ type Transport struct {
 	ID            uuid.UUID `json:"id" gorm:"type:uuid;default:gen_random_uuid();primarykey" validate:"omitempty,uuid"`
 	OwnerID       uuid.UUID `json:"ownerId" gorm:"type:uuid" validate:"required"`
 	CanBeRented   bool      `json:"canBeRented" gorm:"not null" validate:"required"`
-	TransportType string    `json:"transportType" validate:"required"`
+	TransportType string    `json:"transportType" gorm:"type:transport_type" validate:"required"`
 	Model         string    `json:"model" gorm:"not null" validate:"required"`
 	Color         string    `json:"color" gorm:"not null" validate:"required"`
 	Identifier    string    `json:"identifier" gorm:"not null" validate:"required"`
@@ -41,4 +41,13 @@ func (t *Transport) GetPriceByType(rentType string) (float64, error) {
 	default:
 		return 0, errors.New("bad type of price")
 	}
+}
+
+func (t *Transport) IsValidType() bool {
+	switch t.TransportType {
+	case "Car", "Bike", "Scooter":
+		return true
+	}
+
+	return false
 }

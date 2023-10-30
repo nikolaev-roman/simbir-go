@@ -23,3 +23,12 @@ type SearchToRent struct {
 	Radius float64 `json:"radius"`
 	Type   string  `json:"type"`
 }
+
+func (p *SearchToRent) IsValidType() bool {
+	switch p.Type {
+	case "Car", "Bike", "Scooter", "All":
+		return true
+	}
+
+	return false
+}

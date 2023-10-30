@@ -57,6 +57,8 @@ func (u *transportUC) Update(ctx context.Context, transport *models.Transport) (
 		return nil, errors.New("forbidden")
 	}
 
+	transport.OwnerID = account.ID
+
 	return u.transportRepo.Update(ctx, transport)
 }
 

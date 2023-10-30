@@ -12,6 +12,11 @@ type Account struct {
 	Balance  float64   `json:"balance" gorm:"not null;default:0"`
 }
 
+type AccountSign struct {
+	Username string `json:"username" gorm:"unique"`
+	Password string `json:"password" gorm:"not null"`
+}
+
 type AccountSearchParams struct {
 	Start int `json:"start"`
 	Count int `json:"count"`

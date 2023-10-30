@@ -7,3 +7,7 @@ down:
 run:
 	docker start simbirGo
 	go run cmd/api/main.go
+
+swaggo:
+	echo "Starting swagger generating"
+	swag init -g **/**/*.go

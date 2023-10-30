@@ -1,7 +1,261 @@
+basePath: /api
+definitions:
+  models.Account:
+    properties:
+      balance:
+        type: number
+      id:
+        type: string
+      isAdmin:
+        type: boolean
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.AccountSign:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.Transport:
+    properties:
+      canBeRented:
+        type: boolean
+      color:
+        type: string
+      dayPrice:
+        type: number
+      description:
+        type: string
+      id:
+        type: string
+      identifier:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+      minutePrice:
+        type: number
+      model:
+        type: string
+      ownerId:
+        type: string
+      transportType:
+        type: string
+    required:
+    - canBeRented
+    - color
+    - identifier
+    - latitude
+    - longitude
+    - model
+    - ownerId
+    - transportType
+    type: object
+host: localhost:5555
 info:
   contact: {}
-  description: service for transport rent
+  description: service for transport renting
   title: Simbir.GO
   version: "1"
-paths: {}
+paths:
+  /Account/Me:
+    get:
+      consumes:
+      - application/json
+      description: getting account info
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Account'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      summary: Me
+      tags:
+      - Account
+  /Account/SignIn:
+    post:
+      consumes:
+      - application/json
+      description: jwt token getting
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.AccountSign'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+      summary: SignIn
+      tags:
+      - Account
+  /Account/SignUp:
+    post:
+      consumes:
+      - application/json
+      description: create new account
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.AccountSign'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Account'
+        "500":
+          description: Internal Server Error
+      summary: Create new account
+      tags:
+      - Account
+  /Account/Update:
+    put:
+      consumes:
+      - application/json
+      description: update account info
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.AccountSign'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Account'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      tags:
+      - Account
+  /Transport:
+    post:
+      consumes:
+      - application/json
+      description: Create new transport
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Transport'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Transport'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      tags:
+      - Transport
+  /Transport/{transport_id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete transport
+      parameters:
+      - description: Trasnport ID
+        in: path
+        name: transport_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      tags:
+      - Transport
+    get:
+      consumes:
+      - application/json
+      description: get transport info by id
+      parameters:
+      - description: Trasnport ID
+        in: path
+        name: transport_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Transport'
+        "500":
+          description: Internal Server Error
+      tags:
+      - Transport
+    put:
+      consumes:
+      - application/json
+      description: update transport
+      parameters:
+      - description: Trasnport ID
+        in: path
+        name: transport_id
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Transport'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Transport'
+        "500":
+          description: Internal Server Error
+      security:
+      - Authorization: []
+      tags:
+      - Transport
+securityDefinitions:
+  Authorization:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

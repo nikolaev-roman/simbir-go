@@ -46,6 +46,18 @@ func (h *rentHandlers) New() gin.HandlerFunc {
 	}
 }
 
+// Get Rent Transport
+// @Summary
+// @Schemes
+// @Description	Get Rent Transport
+// @Tags		Rent
+// @Accept		json
+// @Produce		json
+// @Security 	Authorization
+// @Param   	request body models.Transport true "query params"
+// @Success		200	{object} models.Transport
+// @Failure		500
+// @Router		/Transport [post]
 func (h *rentHandlers) Get() gin.HandlerFunc {
 	return func(c *gin.Context) {
 

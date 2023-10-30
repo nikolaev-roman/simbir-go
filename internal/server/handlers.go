@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/nikolaev-roman/simbir-go/docs"
+	_ "github.com/nikolaev-roman/simbir-go/docs"
 
 	accountHttp "github.com/nikolaev-roman/simbir-go/internal/account/delivery/http"
 	accountRepository "github.com/nikolaev-roman/simbir-go/internal/account/repository"
@@ -50,7 +50,6 @@ func (s *Server) MapHandlers(server *gin.Engine) error {
 
 	mw := middleware.NewMiddlewareManager(accountUC, s.cfg, []string{"*"})
 
-	docs.SwaggerInfo.BasePath = "/api"
 	server.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	api := server.Group("/api")

@@ -12,6 +12,6 @@ func MapAccountRoutes(accountGroup *gin.RouterGroup, h account.Handlers, uc acco
 	accountGroup.POST("/SignIn", h.SignIn())
 
 	accountGroup.Use(mv.CheckAuth(uc, cfg))
-	accountGroup.GET("/me", h.GetMe())
-	accountGroup.PUT("/:username", h.Update())
+	accountGroup.GET("/Me", h.GetMe())
+	accountGroup.PUT("/Update", h.Update())
 }

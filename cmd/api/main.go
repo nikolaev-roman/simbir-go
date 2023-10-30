@@ -8,10 +8,16 @@ import (
 	"github.com/nikolaev-roman/simbir-go/pkg/db/postgres"
 )
 
-//	@title			Simbir.GO
-//	@version		1
-//	@description	service for transport rent
+// @title		Simbir.GO
+// @version		1
+// @description	service for transport renting
+// @BasePath	/api
+// @host		localhost:5555
 
+// @securityDefinitions.apikey Authorization
+// @in header
+// @name Authorization
+// @description Type "Bearer" followed by a space and JWT token.
 func main() {
 	cfgFile, err := config.LoadConfig("config/config_local")
 	if err != nil {
